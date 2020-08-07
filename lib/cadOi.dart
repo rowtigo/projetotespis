@@ -11,6 +11,8 @@ class cadOi extends StatefulWidget {
   _cadOiState createState() => _cadOiState();
 }
 
+final _formKey = GlobalKey<FormState>();
+
 //---AQUI SÃO OS CONTROLADORES DAS CAIXAS, OU SEJA PARA ONDE VÃO OS DADOS
 TextEditingController nomeController = TextEditingController();
 TextEditingController cpfController = TextEditingController();
@@ -119,13 +121,22 @@ e o valor do controlador quando o usuário alterar o modelo
         child: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
           child: Form(
+            key: _formKey,
+            autovalidate: false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 //cria uma caixa de texto, para cada uma vai todo esse código
                 TextFormField(
-                  keyboardType:
-                      TextInputType.text, //tipo do teclado em Text para texo
+                  keyboardType: TextInputType.text,
+                  maxLength: 40,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O nome esta vazio ! ';
+                    }
+                    return null;
+                  },
+                  //tipo do teclado em Text para texo
                   cursorColor: Colors
                       .white, //cor do cursor (aquela barrinha enquanto está digitando)
                   decoration: InputDecoration(
@@ -142,13 +153,22 @@ e o valor do controlador quando o usuário alterar o modelo
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.0), //estilo do texto a ser digitado
-                  controller:
-                      nomeController, //cont// rolador responsável pela caixa
+                  controller: nomeController,
+
+                  //cont// rolador responsável pela caixa
                 ),
 
                 //Isso se repete em todos os outros
 
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O CPF esta vazio ! ';
+                    } else if (value.length != 11) {
+                      return 'CPF deve conter 11 números ! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -163,7 +183,15 @@ e o valor do controlador quando o usuário alterar o modelo
                   style: TextStyle(color: Colors.white, fontSize: 25.0),
                   controller: cpfController,
                 ),
+
                 TextFormField(
+                  maxLength: 12,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O RG esta vazio ! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -179,6 +207,14 @@ e o valor do controlador quando o usuário alterar o modelo
                   controller: rgController,
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'A data de nascimento esta vazia  ! ';
+                    } else if (value.length != 8) {
+                      return 'A data deve estar no formato dd/mm/yyyy ! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -193,7 +229,15 @@ e o valor do controlador quando o usuário alterar o modelo
                   style: TextStyle(color: Colors.white, fontSize: 25.0),
                   controller: datanascimentoController,
                 ),
+
                 TextFormField(
+                  maxLength: 40,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O nome da mae esta vazio ! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -208,7 +252,15 @@ e o valor do controlador quando o usuário alterar o modelo
                   style: TextStyle(color: Colors.white, fontSize: 25.0),
                   controller: nomemaeController,
                 ),
+
                 TextFormField(
+                  maxLength: 50,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O endereco esta vazio ! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -223,7 +275,15 @@ e o valor do controlador quando o usuário alterar o modelo
                   style: TextStyle(color: Colors.white, fontSize: 25.0),
                   controller: enderecoController,
                 ),
+
                 TextFormField(
+                  maxLength: 15,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O telefone esta vazio ! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -238,6 +298,7 @@ e o valor do controlador quando o usuário alterar o modelo
                   style: TextStyle(color: Colors.white, fontSize: 25.0),
                   controller: tel1Controller,
                 ),
+
                 TextFormField(
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
@@ -312,6 +373,12 @@ e o valor do controlador quando o usuário alterar o modelo
                 //finaliza a linha e volta para a coluna
 
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O numero do contrato nao foi inserido ! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -326,6 +393,7 @@ e o valor do controlador quando o usuário alterar o modelo
                   style: TextStyle(color: Colors.white, fontSize: 25.0),
                   //controller:,
                 ),
+
                 TextFormField(
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
@@ -403,6 +471,12 @@ e o valor do controlador quando o usuário alterar o modelo
                 ),
 
                 TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'O cartão não foi inserido! ';
+                    }
+                    return null;
+                  },
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
@@ -487,7 +561,11 @@ e o valor do controlador quando o usuário alterar o modelo
                     height: 50.0, //altura do botão
                     child: RaisedButton(
                       onPressed: () {
-                        _inserir();
+                        if (_formKey.currentState.validate()) {
+                          _inserir();
+                        } else {
+                          print('erro');
+                        }
                       },
                       child: Text(
                         "Cadastrar", //emfim o texto do botão
