@@ -6,8 +6,8 @@ para que possam ser chamadas quando o usuário clicar nas opções do drawer
  */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'cadOi.dart';
-import 'cadastrosOi.dart';
+import 'package:tespis/cadOi.dart';
+import 'package:tespis/cadastrosOi.dart';
 
 //classe principal que inncia o app chamando a tela "Home" criada logo abaixo
 void main() {
@@ -22,6 +22,43 @@ class Home extends StatefulWidget {
 
 //aqui cria de fato a nossa primeira tela
 class _HomeState extends State<Home> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    // Placeholder(key: ,)
+    Container(
+      alignment: Alignment.center,
+      child: Text(
+        "TESPIS ",
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      ),
+    ),
+
+    Container(
+      alignment: Alignment.center,
+      child: Text(
+        "  O app foi desenvolvido para ser avalido como projeto de conclusão do curso Aprender e Crescer 2020",
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      ),
+    ),
+
+    Container(
+      alignment: Alignment.center,
+      child: Text(
+        "  O projeto foi desenvolvido por : Algélica Luiza Pagani , Rodrigo Gabriel Gossi , Elisa Cichella Capelett",
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      ),
+    ),
+  ];
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,9 +69,27 @@ class _HomeState extends State<Home> {
           centerTitle: true, //serve para centralizar o trexo na barra
           backgroundColor: Colors.pink, //define a cor da barra
         ),
-        body: Container(
-          color: Colors.black87, //esse é a cor do fundo do app (dessa tela)
+
+        body: _children[_currentIndex], // new
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped, // new
+          currentIndex: _currentIndex, // new
+          items: [
+            new BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
+            ),
+            new BottomNavigationBarItem(
+              icon: Icon(Icons.mail),
+              title: Text('Sobre'),
+            ),
+            new BottomNavigationBarItem(
+                icon: Icon(Icons.person), title: Text('Criadores'))
+          ],
         ),
+
+        /// color: Colors.black87, //esse é a cor do fundo do app (dessa tela)
+
         drawer: Drawer(
           //aqui começa o drawer, ou seja o MENU que apareço no lado esquerdo
           child: Container(
@@ -83,3 +138,4 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
